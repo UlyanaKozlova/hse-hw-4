@@ -1,0 +1,67 @@
+services:
+  order-service-db:
+    image: postgres:15
+    container_name: order-service-db
+    environment:
+      POSTGRES_DB: order_service_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: md5
+    ports:
+      - "5433:5432"
+    volumes:
+      - order-service-db-data:/var/lib/postgresql/data
+  payment-service-db:
+    image: postgres:15
+    container_name: payment-service-db
+    environment:
+      POSTGRES_DB: payment_service_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: md5
+    ports:
+      - "5434:5432"
+    volumes:
+      - payment-service-db-data:/var/lib/postgresql/data
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    depends_on:
+      - payment-service
+      - order-service
+    environment:
+      SERVER_PORT: 8083
+    ports:
+      - "8083:8083"
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    depends_on:
+      - order-service-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://order-service-db:5432/order-service
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+      SERVER_PORT: 8081
+    ports:
+      - "8081:8081"
+  payment-service:
+    build: ./payment-service
+    container_name: payment-service
+    depends_on:
+      - payment-service-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://payment-service-db:5432/payment-service
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+      SERVER_PORT: 8082
+    ports:
+      - "8082:8082"
+volumes:
+  order-service-db-data:
+  payment-service-db-data:
