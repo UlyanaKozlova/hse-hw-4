@@ -5,12 +5,29 @@ spring:
   cloud:
     gateway:
       routes:
+
         - id: order-service
           uri: http://order-service:8081
           predicates:
             - Path=/api/order-service/**
+          filters:
+            - RewritePath=/api/order-service/(?<segment>.*), /${segment}
 
         - id: payment-service
           uri: http://payment-service:8082
           predicates:
             - Path=/api/payment-service/**
+          filters:
+            - RewritePath=/api/payment-service/(?<segment>.*), /${segment}
+
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: order-service
+        url: /api/order-service/v3/api-docs
+      - name: payment-service
+        url: /api/payment-service/v3/api-docs
+
+server:
+  port: 8083
