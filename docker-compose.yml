@@ -40,7 +40,7 @@ services:
     depends_on:
       - order-service-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://order-service-db:5432/order-service
+      SPRING_DATASOURCE_URL: jdbc:postgresql://order-service-db:5432/order_service_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -54,7 +54,7 @@ services:
     depends_on:
       - payment-service-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://payment-service-db:5432/payment-service
+      SPRING_DATASOURCE_URL: jdbc:postgresql://payment-service-db:5432/payment_service_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
