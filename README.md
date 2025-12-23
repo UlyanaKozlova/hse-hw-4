@@ -12,17 +12,17 @@ docker-compose up
 docker-compose down
 ```
 # Документация:
-**Оба микросервиса:**
+Вся документация доступна через `api-gateway`
+
+**Swagger-ui для двух микросервисов:**
 
 http://localhost:8083/swagger-ui.html
 
-**Отдельные json для каждого микросервиса:**
+**Отдельная документация для каждого микросервиса:**
 
 http://localhost:8083/api/order-service/v3/api-docs
 
 http://localhost:8083/api/payment-service/v3/api-docs
-
-Отображается документация для `order-service` и `payment-service` через `api-gateway`.
 
 
 ## Архитектура
@@ -37,10 +37,20 @@ http://localhost:8083/api/payment-service/v3/api-docs
 - POST `/api/payment-service/{id}/balance` получить баланс счёта по его айди
 3. **API Gateway** - `8083`- центральный сервис-посредник, принимающий запросы от клиентов и маршрутизирующий их к соответствующим микросервисам. 
 
+`RabbitMQ` обеспечивает at-least-once, а exactly-once достигается благодаря проверке полученных сообщений на уникальность,
+ обеспечивающей идемпотентность бизнес-операций.
 
 ## Docker
 Все микросервисы и БД упакованы в Docker-контейнеры, что позволяет развернуть приложение одной командой `docker-compose up`.
 
 
-## Пользовательские сценарии
-1. 
+
+## Рекомендуемый пользовательский сценарий
+1. Создать счет POST `/api/payment-service/{userId}/account`
+2. Пополнить счет  PATCH `/api/payment-service/{id}/top-up/{sum}/account`
+3. При желании можно проверить баланс счета POST `/api/payment-service/{id}/balance`
+4. Добавить заказ POST `api/order-service/order/{userId}/{amount}/{description}`
+    При указании несуществующего айди пользователя заказ добавляется в БД, но считается отмененным.
+5. Посмотреть список заказов GET `api/order-service/orders`
+6. Посмотреть статус сделанного заказа GET `api/order-service/{id}/status`
+7. Можно проверить, что сумма действительно списалась со счета `/api/payment-service/{id}/balance`
