@@ -1,7 +1,7 @@
-package org.example.orderservice.dto;
+package org.example.orderservice.dto.order;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.example.orderservice.entity.Status;
+import org.example.orderservice.entity.order.Status;
 
 public record OrderResponse(
         @Schema(description = "Order unique Id")

@@ -1,7 +1,7 @@
-package org.example.orderservice.entity;
+package org.example.orderservice.entity.order;
 
-import org.example.orderservice.dto.OrderRequest;
-import org.example.orderservice.dto.OrderResponse;
+import org.example.orderservice.dto.order.OrderRequest;
+import org.example.orderservice.dto.order.OrderResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

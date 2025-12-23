@@ -39,11 +39,17 @@ services:
     container_name: order-service
     depends_on:
       - order-service-db
+      - rabbit
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://order-service-db:5432/order_service_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+      SPRING_RABBITMQ_HOST: rabbit
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: rabbit
+      SPRING_RABBITMQ_PASSWORD: rabbit
 
       SERVER_PORT: 8081
     ports:
@@ -53,15 +59,30 @@ services:
     container_name: payment-service
     depends_on:
       - payment-service-db
+      - rabbit
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://payment-service-db:5432/payment_service_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
+      SPRING_RABBITMQ_HOST: rabbit
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: rabbit
+      SPRING_RABBITMQ_PASSWORD: rabbit
+
       SERVER_PORT: 8082
     ports:
       - "8082:8082"
+
+  rabbit:
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 volumes:
   order-service-db-data:
   payment-service-db-data:

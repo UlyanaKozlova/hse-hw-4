@@ -1,4 +1,4 @@
-package org.example.orderservice.dto;
+package org.example.orderservice.dto.order;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -10,4 +10,3 @@ public record OrderRequest(
         @Schema(description = "Description of order")
         String description) {
 }
-// todo поменять на price

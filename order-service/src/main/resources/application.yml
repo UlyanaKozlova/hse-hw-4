@@ -10,6 +10,11 @@ spring:
   jackson:
     serialization:
       indent-output: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: rabbit
+    password: rabbit
 springdoc:
   swagger-ui:
     disable-swagger-default-url: true

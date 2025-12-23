@@ -9,7 +9,6 @@ import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
-
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI().servers(List.of(new Server().url("http://localhost:8083")));

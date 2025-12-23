@@ -1,4 +1,4 @@
-package org.example.paymentservice.dto;
+package org.example.paymentservice.dto.account;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -1,4 +1,4 @@
-package org.example.paymentservice.entity;
+package org.example.paymentservice.entity.account;
 
 import jakarta.persistence.*;
 import lombok.Getter;

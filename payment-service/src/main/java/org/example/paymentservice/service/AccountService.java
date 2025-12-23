@@ -1,28 +1,33 @@
 package org.example.paymentservice.service;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.example.paymentservice.dto.AccountResponse;
-import org.example.paymentservice.entity.Account;
-import org.example.paymentservice.entity.AccountMapper;
+import lombok.experimental.FieldDefaults;
+import org.example.paymentservice.dto.account.AccountResponse;
+import org.example.paymentservice.entity.account.Account;
+import org.example.paymentservice.entity.account.AccountMapper;
 import org.example.paymentservice.repository.AccountRepository;
+import org.example.paymentservice.util.exception.exceptions.AccountAlreadyExistException;
+import org.example.paymentservice.util.exception.exceptions.AccountNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountService {
     AccountRepository accountRepository;
     AccountMapper accountMapper;
 
     public AccountResponse addAccount(Long userId) {
         if (accountRepository.existsByUserId(userId)) {
-            throw new RuntimeException("User already exists");
+            throw new AccountAlreadyExistException(userId);
         }
         return accountMapper.accountToResponse(accountRepository.save(new Account(userId)));
     }
 
     public AccountResponse topUpAccount(Long id, Long sum) {
         if (!accountRepository.existsById(id)) {
-            throw new RuntimeException("Account do not exist by id");
+            throw new AccountNotFoundException(id);
         }
         Account account = accountRepository.findAccountById(id);
         account.setBalance(account.getBalance() + sum);
@@ -31,7 +36,7 @@ public class AccountService {
 
     public Long getBalance(Long id) {
         if (!accountRepository.existsById(id)) {
-            throw new RuntimeException("Account do not exist by id");
+            throw new AccountNotFoundException(id);
         }
         return accountRepository.findAccountById(id).getBalance();
     }

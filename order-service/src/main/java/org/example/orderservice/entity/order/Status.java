@@ -1,4 +1,4 @@
-package org.example.orderservice.entity;
+package org.example.orderservice.entity.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

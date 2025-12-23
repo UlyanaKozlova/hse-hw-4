@@ -2,8 +2,10 @@ package org.example.paymentservice.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.example.paymentservice.dto.AccountResponse;
+import lombok.experimental.FieldDefaults;
+import org.example.paymentservice.dto.account.AccountResponse;
 import org.example.paymentservice.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/payment-service")
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountController {
     AccountService accountService;
 
