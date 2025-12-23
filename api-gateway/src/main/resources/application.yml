@@ -1,26 +1,49 @@
+server:
+  port: 8083
 spring:
   application:
     name: api-gateway
-
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
       routes:
+        - id: order-service-swagger
+          uri: http://order-service:8081
+          predicates:
+            - Path=/api/order-service/v3/api-docs
+          filters:
+            - RewritePath=/api/order-service/v3/api-docs, /v3/api-docs
+        - id: payment-service-swagger
+          uri: http://payment-service:8082
+          predicates:
+            - Path=/api/payment-service/v3/api-docs
+          filters:
+            - RewritePath=/api/payment-service/v3/api-docs, /v3/api-docs
 
         - id: order-service
           uri: http://order-service:8081
           predicates:
             - Path=/api/order-service/**
-          filters:
-            - RewritePath=/api/order-service/(?<segment>.*), /${segment}
 
         - id: payment-service
           uri: http://payment-service:8082
           predicates:
             - Path=/api/payment-service/**
-          filters:
-            - RewritePath=/api/payment-service/(?<segment>.*), /${segment}
-
-
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:8083"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
 springdoc:
   swagger-ui:
     urls:
@@ -28,6 +51,3 @@ springdoc:
         url: /api/order-service/v3/api-docs
       - name: payment-service
         url: /api/payment-service/v3/api-docs
-
-server:
-  port: 8083

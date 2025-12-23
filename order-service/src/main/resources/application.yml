@@ -1,20 +1,17 @@
+server:
+  port: 8081
 spring:
   application:
     name: order-service
-
   datasource:
     url: jdbc:postgresql://localhost:5433/order_service_db
     username: postgres
     password: postgres
-
   jackson:
     serialization:
       indent-output: true
-
-server:
-  port: 8081
 springdoc:
-  api-docs:
-    path: /v3/api-docs
   swagger-ui:
-    path: /swagger-ui.html
+    disable-swagger-default-url: true
+  api-docs:
+    enabled: true

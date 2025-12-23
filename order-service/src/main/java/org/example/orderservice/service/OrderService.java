@@ -31,6 +31,6 @@ public class OrderService {
     }
 
     public Status getStatusById(Long id) {
-        return orderRepository.findStatusById(id); //todo мб в репозитории
+        return orderRepository.findStatusById(id);
     }
 }
