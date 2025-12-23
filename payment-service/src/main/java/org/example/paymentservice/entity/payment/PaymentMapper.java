@@ -1,7 +1,7 @@
 package org.example.paymentservice.entity.payment;
 
-import org.example.paymentservice.dto.event.PaymentRequest;
-import org.example.paymentservice.dto.event.PaymentResponse;
+import org.example.paymentservice.dto.payment.PaymentRequest;
+import org.example.paymentservice.dto.payment.PaymentResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

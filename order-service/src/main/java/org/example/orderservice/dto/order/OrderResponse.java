@@ -12,7 +12,6 @@ public record OrderResponse(
         Long amount,
         @Schema(description = "Description of order")
         String description,
-        // todo опциональное
         @Schema(description = "Status of order: NEW, FINISHED, CANCELLED")
         Status status) {
 }

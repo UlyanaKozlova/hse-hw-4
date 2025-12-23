@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 import lombok.experimental.FieldDefaults;
-import org.example.paymentservice.dto.event.PaymentRequest;
+import org.example.paymentservice.dto.payment.PaymentRequest;
 import org.example.paymentservice.entity.payment.Payment;
 import org.example.paymentservice.entity.account.Account;
 import org.example.paymentservice.entity.payment.PaymentMapper;

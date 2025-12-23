@@ -30,9 +30,14 @@ public class OrderController {
             @ApiResponse(responseCode = "401", description = "Error with deserialization of order objects"),
             @ApiResponse(responseCode = "404", description = "No order by id is found")
     })
-    @PostMapping("/order")
-    public ResponseEntity<OrderResponse> addOrder(@RequestBody OrderRequest orderRequest) {// todo PathVariable
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.addOrder(orderRequest));
+    @PostMapping("/order/{userId}/{amount}/{description}")
+    public ResponseEntity<OrderResponse> addOrder(@Parameter(description = "User id, each userId corresponds to one account, account needs to exist before adding an order to it", example = "1")
+                                                  @PathVariable Long userId,
+                                                  @Parameter(description = "Price of the order", example = "100")
+                                                  @PathVariable Long amount,
+                                                  @Parameter(description = "Optional description of the order", example = "1")
+                                                  @PathVariable String description) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.addOrder(userId, amount, description));
     }
 
     @Operation(description = "Get all orders")

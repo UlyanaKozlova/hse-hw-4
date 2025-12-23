@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OutboxEventRepository extends JpaRepository<OrderEvent, Long> {
+public interface EventRepository extends JpaRepository<OrderEvent, Long> {
     List<OrderEvent> findBySentFalseOrderByIdAsc();
 }

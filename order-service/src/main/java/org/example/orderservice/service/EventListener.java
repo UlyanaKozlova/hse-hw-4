@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PaymentListener {
+public class EventListener {
     OrderRepository orderRepository;
     ObjectMapper objectMapper;
     EventMapper eventMapper;

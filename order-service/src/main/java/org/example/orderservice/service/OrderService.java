@@ -13,7 +13,7 @@ import org.example.orderservice.entity.order.OrderMapper;
 import org.example.orderservice.entity.order.Status;
 import org.example.orderservice.entity.event.OrderEvent;
 import org.example.orderservice.repository.OrderRepository;
-import org.example.orderservice.repository.OutboxEventRepository;
+import org.example.orderservice.repository.EventRepository;
 import org.example.orderservice.util.exception.exceptions.OrderNotFoundException;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,18 +28,17 @@ public class OrderService {
     OrderRepository orderRepository;
     OrderMapper orderMapper;
     ObjectMapper objectMapper;
-    OutboxEventRepository outboxEventRepository;
+    EventRepository eventRepository;
     EventMapper eventMapper;
 
     @Transactional
-    public OrderResponse addOrder(OrderRequest orderRequest) {
-        Order order = orderMapper.requestToOrder(orderRequest);
-        order.setStatus(Status.NEW);
+    public OrderResponse addOrder(Long userId, Long amount, String description) {
+        Order order =new Order(userId, amount,description,Status.NEW);
         orderRepository.save(order);
         OrderEvent outbox = eventMapper.orderOutboxEventToOrderEvent(
                 new OrderOutboxEvent(order.getId(), order.getUserId(), order.getAmount()),
                 objectMapper);
-        outboxEventRepository.save(outbox);
+        eventRepository.save(outbox);
         return orderMapper.orderToResponse(order);
     }
 
