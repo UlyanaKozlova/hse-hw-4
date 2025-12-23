@@ -25,10 +25,13 @@ public class Order {
     @Enumerated(EnumType.STRING)
     Status status;
 
-    public Order(Long userId, Long amount, String description, Status status) {
+    public Order(Long userId, Long amount, String description) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount of order must be more than 0");
+        }
         this.userId = userId;
         this.amount = amount;
         this.description = description;
-        this.status = status;
+        this.status = Status.NEW;
     }
 }

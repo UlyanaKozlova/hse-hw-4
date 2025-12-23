@@ -11,7 +11,6 @@ import org.example.paymentservice.entity.account.Account;
 import org.example.paymentservice.entity.payment.PaymentMapper;
 import org.example.paymentservice.repository.AccountRepository;
 import org.example.paymentservice.repository.PaymentRepository;
-import org.example.paymentservice.util.exception.exceptions.AccountNotFoundException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,18 +32,15 @@ public class PaymentListener {
     public void handle(String message) throws Exception {
         PaymentRequest paymentRequest = objectMapper.readValue(message, PaymentRequest.class);
         if (!paymentRepository.existsByOrderId(paymentRequest.orderId())) {
-            if (!accountRepository.existsByUserId(paymentRequest.userId())) {
-                throw new AccountNotFoundException(paymentRequest.userId());
-            }
-            Account account = accountRepository.findByUserId(paymentRequest.userId());
             Payment payment = paymentMapper.paymentRequestToPayment(paymentRequest);
             payment.setProcessedAt(LocalDateTime.now());
-
-            if (account.getBalance() >= paymentRequest.amount()) {
-                account.setBalance(account.getBalance() - paymentRequest.amount());
-                payment.setSuccessful(true);
-            } else {
-                payment.setSuccessful(false);
+            payment.setSuccessful(false);
+            if (accountRepository.existsByUserId(paymentRequest.userId())) {
+                Account account = accountRepository.findByUserId(paymentRequest.userId());
+                if (account.getBalance() >= paymentRequest.amount()) {
+                    account.setBalance(account.getBalance() - paymentRequest.amount());
+                    payment.setSuccessful(true);
+                }
             }
             paymentRepository.save(payment);
             paymentPublisher.sendResult(payment);

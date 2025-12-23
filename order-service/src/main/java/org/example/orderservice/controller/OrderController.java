@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.example.orderservice.dto.order.OrderRequest;
 import org.example.orderservice.dto.order.OrderResponse;
 import org.example.orderservice.entity.order.Status;
 import org.example.orderservice.service.OrderService;
@@ -35,7 +34,7 @@ public class OrderController {
                                                   @PathVariable Long userId,
                                                   @Parameter(description = "Price of the order", example = "100")
                                                   @PathVariable Long amount,
-                                                  @Parameter(description = "Optional description of the order", example = "1")
+                                                  @Parameter(description = "Optional description of the order", example = "my order")
                                                   @PathVariable String description) {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.addOrder(userId, amount, description));
     }

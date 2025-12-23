@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.example.orderservice.dto.event.OrderOutboxEvent;
-import org.example.orderservice.dto.order.OrderRequest;
 import org.example.orderservice.dto.order.OrderResponse;
 import org.example.orderservice.entity.event.EventMapper;
 import org.example.orderservice.entity.order.Order;
@@ -33,7 +32,7 @@ public class OrderService {
 
     @Transactional
     public OrderResponse addOrder(Long userId, Long amount, String description) {
-        Order order =new Order(userId, amount,description,Status.NEW);
+        Order order =new Order(userId, amount,description);
         orderRepository.save(order);
         OrderEvent outbox = eventMapper.orderOutboxEventToOrderEvent(
                 new OrderOutboxEvent(order.getId(), order.getUserId(), order.getAmount()),

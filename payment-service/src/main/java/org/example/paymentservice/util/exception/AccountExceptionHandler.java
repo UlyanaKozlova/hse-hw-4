@@ -28,6 +28,11 @@ public class AccountExceptionHandler {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException e) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
     private ResponseEntity<Map<String, Object>> buildErrorResponse(HttpStatus status, String message) {
         Map<String, Object> body = new HashMap<>();
         body.put("message", message);

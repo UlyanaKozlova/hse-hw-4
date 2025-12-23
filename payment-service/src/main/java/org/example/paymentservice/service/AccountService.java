@@ -29,6 +29,9 @@ public class AccountService {
         if (!accountRepository.existsById(id)) {
             throw new AccountNotFoundException(id);
         }
+        if (sum <= 0) {
+            throw new IllegalArgumentException("Sum must be more than 0");
+        }
         Account account = accountRepository.findAccountById(id);
         account.setBalance(account.getBalance() + sum);
         return accountMapper.accountToResponse(accountRepository.save(account));
