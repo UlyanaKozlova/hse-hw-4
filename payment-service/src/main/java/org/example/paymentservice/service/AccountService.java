@@ -11,6 +11,9 @@ import org.example.paymentservice.util.exception.exceptions.AccountAlreadyExistE
 import org.example.paymentservice.util.exception.exceptions.AccountNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -42,6 +45,13 @@ public class AccountService {
             throw new AccountNotFoundException(id);
         }
         return accountRepository.findAccountById(id).getBalance();
+    }
+
+    public List<AccountResponse> getAccounts() {
+        if (accountRepository.count() == 0) {
+            throw new AccountNotFoundException();
+        }
+        return accountRepository.findAll().stream().map(accountMapper::accountToResponse).collect(Collectors.toList());
     }
 }
 
