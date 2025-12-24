@@ -57,7 +57,7 @@ http://localhost:8083/api/payment-service/v3/api-docs
    - POST `/api/payment-service/{id}/balance` получить баланс счёта по его айди
    - GET `/api/payment-service/accounts` получить список всех счетов
 3. **API Gateway** - `8083`- центральный сервис-посредник, принимающий запросы от клиентов и маршрутизирующий их к соответствующим микросервисам. 
-4. **Frontend** - `3000` - отдельный сервиса для веб-интерфейса
+4. **Frontend** - `3000` - отдельный сервис для веб-интерфейса
 
 ## RabbitMQ
 `RabbitMQ` обеспечивает at-least-once, а exactly-once достигается благодаря проверке полученных сообщений на уникальность,
@@ -94,3 +94,21 @@ http://localhost:8083/api/payment-service/v3/api-docs
 1. Создать заказ (важно создавать заказ по айди юзера, а не по айди счета) - `Create order`
 2. Получить статус заказа по айди заказа - `Get order status`
 3. Обновить список всех заказов - `Reload all orders`
+
+## Технологии:
+### Backend
+- Java 21
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- OpenAPI / Swagger
+
+### Frontend
+- React
+- Vite
+- Material UI (MUI)
+
+### Infrastructure
+- PostgreSQL
+- RabbitMQ
+- Docker 
