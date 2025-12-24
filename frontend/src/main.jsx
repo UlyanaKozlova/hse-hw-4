@@ -10,8 +10,8 @@ const theme = createTheme({
             main: "#f2aac2",
         },
         background: {
-            default: "#1a1a2e",
-            paper: "#16213e",
+            default: "#050525",
+            paper: "#040419",
         },
     },
     shape: {
@@ -20,6 +20,21 @@ const theme = createTheme({
     h3: {
         fontWeight: 700,
         letterSpacing: "0.04em",
+    },
+    typography: {
+        fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
+        h3: {
+            fontFamily: `"Playfair Display", serif`,
+            fontWeight: 700,
+        },
+        h5: {
+            fontFamily: `"Playfair Display", serif`,
+            fontWeight: 600,
+        },
+        h6: {
+            fontFamily: `"Playfair Display", serif`,
+            fontWeight: 600,
+        },
     },
 });
 
