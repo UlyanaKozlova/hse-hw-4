@@ -83,6 +83,13 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+
 volumes:
   order-service-db-data:
   payment-service-db-data:
