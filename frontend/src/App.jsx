@@ -1,5 +1,6 @@
-import Accounts from "./pages/Accounts";
-import Orders from "./pages/Orders";
+import Accounts from "./components/Accounts";
+import Orders from "./components/Orders";
+import Picture from "./components/Picture";
 import {Container, Stack, Typography} from "@mui/material";
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
 
                 <Accounts/>
                 <Orders/>
+                <Picture/>
             </Stack>
         </Container>
     );
